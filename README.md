@@ -114,3 +114,78 @@ Public URL: http://52.10.188.173/
  - Confirm time change by typing `date` on the command line <br>
  - Reference Documentation: http://askubuntu.com/questions/138423/how-do-i-change-my-timezone-to-utc-gmt/138442 
  
+ ## 10. Install and configure **Apache server** to serve a **WSGI** Python app.
+
+    ```
+    # Install Apache
+    sudo apt-get install apache2
+
+    # Install WSGI for Python 3
+    sudo apt-get install libapache2-mod-wsgi-py3
+
+    # Enable the WSGI module
+    sudo a2enmod wsgi
+    ```
+ - In order to check if everything's working correctly you can open your server's address in a browser and the Apache's default page should display.
+ - Now, to test that WSGI is working:
+
+    ```
+    # Open the apache's default site configuration file
+    sudo nano /etc/apache2/sites-enabled/000-default.conf
+
+    # Right before the </VirtualHost> closing tag, add the following:
+    WSGIScriptAlias / /var/www/html/myapp.wsgi
+    ```
+
+- This tells apache to serve a `myapp.wsgi` app whenever the / route is requested. Now do:
+
+    ```
+    # Create the app file and add
+    sudo nano /var/www/html/myapp.wsgi
+
+    # Which is this:
+    def application(environ, start_response):
+        status = '200 OK'
+        output = 'Hello Udacity'
+
+        response_headers = [('Content-type', 'text/plain'$
+        start_response(status, response_headers)
+
+        return [output]
+
+    # Now restart the apache server
+    sudo apache2ctl restart
+    ```
+- If you reload the page in your browser and see the 'Hello Udacity' message. Now apache and wsgi are initalize and set up.
+
+## 11a. Install **PostgreSQL**
+    ```
+    sudo apt-get install postgresql
+    ```
+## 11b. Create a new database user named with limited permissions to the database
+ - Connect to database as the user postgres `sudo su - postgres` 
+ - Type `psql` to generate PostgreSQL prompt
+ - Create a new user: `CREATE USER catalog WITH PASSWORD 'your_passwd';`
+ - Confirm that the user was created: `\du`
+ - Reference Documentation: http://www.postgresql.org/docs/9.1/static/sql-createrole.html 
+
+## 11c. Limit permissions to new database user 
+ - Run `\du` to see what permissions the user _catalog_ has
+ - To see possible user roles, type: `\h CREATE ROLE`
+ - Update permissions for catalog user: <br>
+   ```
+   ALTER ROLE catalog WITH LOGIN;
+   ALTER USER catalog CREATEDB;
+   ```
+ - Create the database: `CREATE DATABASE catalog WITH OWNER catalog;`
+ - Login to the database: `\c catalog`
+ - Revoke all rights: `REVOKE ALL ON SCHEMA public FROM public;` 
+ - Grant only access to the catalog role: `GRANT ALL ON SCHEMA public TO catalog;` 
+ - Exit out of PostgreSQL and the postgres user: `\q`, then `exit`
+ - Restart postgresql: `sudo service postgresql restart`
+ - Reference Documentation: https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps
+
+## 12. Install **Git**
+    ```
+    sudo apt-get install git
+
