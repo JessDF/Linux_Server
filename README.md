@@ -238,3 +238,46 @@ Public URL: http://52.10.188.173/
   ```
 ## 15. Now tell Apache about our app
  - Create the site configuration file: `sudo nano /etc/apache2/sites-available/catalog.conf`
+ - Add the following to the file:
+  ```
+   <VirtualHost *:80>
+		  	ServerName catalog.com
+		  	ServerAdmin admin@catalog.com
+		  	WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+		  	<Directory /var/www/catalog/catalog/>
+					  	  Order allow,deny
+					  	  Allow from all
+		  	</Directory>
+		  	Alias /static /var/www/catalog/catalog/static
+		  	<Directory /var/www/catalog/catalog/static/>
+					  	  Order allow,deny
+					  	  Allow from all
+		  	</Directory>
+		  	ErrorLog ${APACHE_LOG_DIR}/error.log
+		  	LogLevel warn
+		  	CustomLog ${APACHE_LOG_DIR}/access.log combined
+   </VirtualHost>
+  ```
+ - Create the application entry point: `sudo nano /var/www/catalog/catalog.wsgi`
+ - Add the following to the file:
+   ```
+   #!/usr/bin/python
+   import sys
+   import logging
+   logging.basicConfig(stream=sys.stderr)
+   sys.path.insert(0,"/var/www/catalog/")
+ 
+   activate_this = '/var/www/catalog/catalog/venv/bin/activate_this.py'
+   with open(activate_this) as file:
+       exec(file.read(), dict(__file__=activate_this))
+
+   from catalog import app as application
+   application.secret_key = 'some not so secret secret'
+    ```
+ - Now run the following commands:
+    ```
+    sudo a2dissite 000-default.conf
+    sudo a2dissite catalog.conf
+    sudo service apache2 restart
+    ```
+## 16. Set Up the database
