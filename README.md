@@ -186,6 +186,55 @@ Public URL: http://52.10.188.173/
  - Reference Documentation: https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps
 
 ## 12. Install **Git**
-    ```
-    sudo apt-get install git
+ - Intall git with: `sudo apt-get install git`
+ - Edit Git Configuration
+   ```
+   git config --global user.name "Your Name"
+   git config --global user.email youremail@domain.com
+   ```
 
+## 13. Clone Udacity Project: ItemCatalog
+ - I did some file reorganization on my project after cloning (as I have my catalog folder within a vagrant folder)
+ - To clone run the command: `git clone https://github.com/JessDF/itemCatalog`
+ - Now reorganize the file structure to look like
+   ```
+   /var
+      /www
+         /catalog
+            /catalog
+               /images
+               /static
+               /templates
+               database_operations.py
+               install_db.py
+               item_catalog.db
+               item_catalog.py  ## Rename this file to __init__.py
+               item_database_config.py
+    ```
+ - You will also need to add a client_secret.json file with in the /var/www/catalog/catalog folder
+ - Also add a redirct so that .git can't be accessed with in a a .htaccess file and include this line: `RedirectMatch 404 /\.git`
+
+## 14. Install Flask and create Virtual Environment for the Catalog App
+- Set up a *virtual environment* in order to keep the application and its dependencies isolated from the main system:
+   ```
+   # Install PIP for Python 3
+   sudo apt-get install python3-pip
+
+   sudo pip3 install virtualenv
+
+   # Create environment
+   sudo virtualenv venv
+
+   # Activate the environment
+   source venv/bin/activate
+   ```
+- Now, install the project dependencies. For this one:
+  ```
+  sudo -H pip3 install Flask
+  sudo -H pip3 install sqlalchemy
+  sudo -H pip3 install oauth2client
+  sudo -H pip3 install requests
+  sudo -H pip3 install psycopg2
+  ```
+## 15. Now tell Apache about our app
+ - Create the site configuration file: `sudo nano /etc/apache2/sites-available/catalog.conf`
