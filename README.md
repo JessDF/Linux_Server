@@ -15,9 +15,9 @@ Public URL: http://52.10.188.173/
 ## 2. Update all currently installed packages by running:
 
     ```
-    apt-get update
-    apt-get upgrade
-    sudo apt-get dist-upgrade
+     sudo apt-get update
+     sudo apt-get upgrade
+     sudo apt-get dist-upgrade
     ```
 ## 3. Change the **SSH port** from *22* to *2200*
 
@@ -68,8 +68,18 @@ Public URL: http://52.10.188.173/
    123/udp (v6)               ALLOW       Anywhere (v6)
    ```
 ## 5. Add a new user
- - As root, type `sudo adduser grader`. Then follow prompts to add a password and name for this new account. 
- - Confirm addition of the new user by typing `sudo cat /etc/passwd`, the user grader should be listed in the output.
+ - As root and then follow the prompts to add a password and name for this new account. 
+ - Once you do that, you will need to add the user to the sudoers file.
+    ```
+    sudo adduser grader
+    
+    # Confirm user
+    sudo cat /etc/passwd
+    
+    # Add user to sudoers with this command
+    sudo visudo
+    grader   ALL=(ALL:ALL) ALL  # add this line to the file
+    ```
  
  ## 6. Set-up Key-based Authentication/Public Key Encryption
  - Using ssh-keygen on your local machine, create a key for the user grader. <br>
