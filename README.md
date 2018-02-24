@@ -25,10 +25,10 @@ Public URL: http://52.10.188.173/
     # Open the SSH configuration file
     nano /etc/ssh/sshd_config
 
-    # Change this line:
-    # Port 22
-    # To this:
-    # Port 2200
+    # Change this:
+    Port 22
+    # To:
+    Port 2200
 
     # Save and exit
 
