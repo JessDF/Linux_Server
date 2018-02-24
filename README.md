@@ -208,11 +208,19 @@ Public URL: http://52.10.188.173/
                database_operations.py
                install_db.py
                item_catalog.db
-               item_catalog.py  ## Rename this file to __init__.py
+               item_catalog.py
                item_database_config.py
     ```
  - You will also need to add a client_secret.json file with in the /var/www/catalog/catalog folder
  - Also add a redirct so that .git can't be accessed with in a a .htaccess file and include this line: `RedirectMatch 404 /\.git`
+ - Lastly, replace lines in:
+ 	- item_catalog.py # change file name to __init__.py
+	- templates/main.html  # In this file, add client secret in spot that says: <CLIENT_SECRET_REPLACE>
+	- catalog/item_catalog.py  # Where it says 'client_secret.json'  replace with '/var/www/catalog/catalog/client_secret.json'
+	- templates/login.html # In this file, add client secrete in spot that says: <REPLACE CLIENT ID>
+	- __init__.py (use to be item_catalog.py) # app.secret_key = 'super_secret_key' replace 'super_secret_key' with client secret
+	- __init__.py (use to be item_catalog.py) # change app.run(host='0.0.0.0', port=8080) to app.run()
+
 
 ## 14. Install Flask and create Virtual Environment for the Catalog App
 - Set up a *virtual environment* in order to keep the application and its dependencies isolated from the main system:
@@ -239,10 +247,9 @@ Public URL: http://52.10.188.173/
 ## 15. Now tell Apache about our app
  - Create the site configuration file: `sudo nano /etc/apache2/sites-available/catalog.conf`
  - Add the following to the file:
-  ```
+   ```
    <VirtualHost *:80>
 		  	ServerName catalog.com
-		  	ServerAdmin admin@catalog.com
 		  	WSGIScriptAlias / /var/www/catalog/catalog.wsgi
 		  	<Directory /var/www/catalog/catalog/>
 					  	  Order allow,deny
@@ -257,7 +264,8 @@ Public URL: http://52.10.188.173/
 		  	LogLevel warn
 		  	CustomLog ${APACHE_LOG_DIR}/access.log combined
    </VirtualHost>
-  ```
+   ```
+ - References: http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/ and https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
  - Create the application entry point: `sudo nano /var/www/catalog/catalog.wsgi`
  - Add the following to the file:
    ```
@@ -272,12 +280,22 @@ Public URL: http://52.10.188.173/
        exec(file.read(), dict(__file__=activate_this))
 
    from catalog import app as application
-   application.secret_key = 'some not so secret secret'
+   application.secret_key = 'super_secret_key' # replace 'super_secret_key' with client secret
     ```
  - Now run the following commands:
     ```
     sudo a2dissite 000-default.conf
-    sudo a2dissite catalog.conf
+    sudo a2ensite catalog.conf
     sudo service apache2 restart
     ```
 ## 16. Set Up the database
+ -  Change every `create_engine('sqlite:///catalog.db')` line to `create_engine('postgresql://catalog:item-catalog-passwd@localhost/catalog')`.
+ 	- Files to change include: `database_operations.py` and `item_database_config.py`
+	- In the above line, don't forget to replace "item-catalog-passwd" with actual password
+ - We will now need to populate the database by running:
+   ```
+   sudo python install_db.py
+   sudo python item_database_config.py
+   ```
+<hr>
+Everything should be working now. I want to thank Fernando Saavedra (@fsvdr) and Péter Szabó (@peta) for the help. I spoke with them on the udacity channel and they were a big help.
