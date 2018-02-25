@@ -104,6 +104,10 @@ Public URL: http://52.10.188.173/
     # Change both, directory and file, ownership to the grader user
     chown grader /home/grader/.ssh
     chown grader /home/grader/.ssh/authorized_keys
+    
+    # You may also need to uncomment this line
+    sudo nano /etc/ssh/sshd_config
+    AuthorizedKeysFile %h/.ssh/authorized_keys
     ```
  - Copy-and-paste the contents of the .pub key file created on your local machine 
    above to the server as the contents of the authorized_keys file and run `service ssh restart`
