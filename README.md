@@ -3,8 +3,9 @@ Udacity Fullstack Web Development Nanodegree Program - Project 8: Linux Server
 
 ### Check it out
 Instance Name: udacity-jessie-dowding <br>
-IP Address: 52.10.188.173 <br>
-Public URL: http://52.10.188.173/
+IP Address: 34.215.200.117 <br>
+Public URL: http://34.215.200.117/  <br>
+Login with: ssh grader@34.215.200.117 -p 2200 -i ~/.ssh/udacity_Linux
 
 ## 1. Login and create your server
  - Go to https://lightsail.aws.amazon.com to create an aws account
@@ -310,4 +311,6 @@ Public URL: http://52.10.188.173/
    sudo python item_database_config.py
    ```
 <hr>
-Everything should be working now. I want to thank Fernando Saavedra (@fsvdr) and Péter Szabó (@peta) for the help. I spoke with them on the udacity channel and they were a big help.
+Everything should be working now. I want to thank Fernando Saavedra (@fsvdr) and Péter Szabó (@peta) for the help. I spoke with them on the udacity channel and they were a big help. <br> <br>
+
+For reference final layout of folder structure is: https://github.com/JessDF/catalog
