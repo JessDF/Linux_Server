@@ -72,6 +72,7 @@ Public URL: http://52.10.188.173/
  - Once you do that, you will need to add the user to the sudoers file.
     ```
     sudo adduser grader
+    sudo adduser grader sudo
     
     # Confirm user
     sudo cat /etc/passwd
