@@ -238,10 +238,10 @@ Login with: ssh grader@34.215.200.117 -p 2200 -i ~/.ssh/udacity_Linux
 ## 14. Install Flask and create Virtual Environment for the Catalog App
 - Set up a *virtual environment* in order to keep the application and its dependencies isolated from the main system:
    ```
-   # Install PIP for Python 3
-   sudo apt-get install python3-pip
+   # Install PIP for Python
+   sudo apt-get install python-pip
 
-   sudo pip3 install virtualenv
+   sudo pip install virtualenv
 
    # Create environment
    sudo virtualenv venv
@@ -251,11 +251,15 @@ Login with: ssh grader@34.215.200.117 -p 2200 -i ~/.ssh/udacity_Linux
    ```
 - Now, install the project dependencies. For this one:
   ```
-  sudo -H pip3 install Flask
-  sudo -H pip3 install sqlalchemy
-  sudo -H pip3 install oauth2client
-  sudo -H pip3 install requests
-  sudo -H pip3 install psycopg2
+  sudo pip install Flask
+  sudo pip install sqlalchemy
+  sudo pip install Flask-SQLAlchemy
+  sudo pip install psycopg2
+  sudo apt-get install python-psycopg2 
+  sudo pip install flask-seasurf
+  sudo pip install oauth2client
+  sudo pip install httplib2
+  sudo pip install requests
   ```
 ## 15. Now tell Apache about our app
  - Create the site configuration file: `sudo nano /etc/apache2/sites-available/catalog.conf`
