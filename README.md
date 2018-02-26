@@ -5,8 +5,8 @@ Udacity Fullstack Web Development Nanodegree Program - Project 8: Linux Server
 Instance Name: udacity-jessie-dowding <br>
 IP Address: 34.215.200.117 <br>
 Public URL: http://34.215.200.117/  <br>
-Login with: ssh grader@34.215.200.117 -p 2200 -i ~/.ssh/udacity_Linux
-Instance name: udacity_JessieDowding
+Login with: ssh grader@34.215.200.117 -p 2200 -i ~/.ssh/udacity_Linux <br>
+Instance name: udacity_JessieDowding <br>
 Private IP: 172.26.4.24
 
 ## 1. Login and create your server
