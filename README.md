@@ -61,15 +61,14 @@ Private IP: 172.26.4.24
    ```
    To                         Action      From
    --                         ------      ----
-   22                         ALLOW       Anywhere
    2200/tcp                   ALLOW       Anywhere
    80/tcp                     ALLOW       Anywhere
    123/udp                    ALLOW       Anywhere
-   22 (v6)                    ALLOW       Anywhere (v6)
    2200/tcp (v6)              ALLOW       Anywhere (v6)
    80/tcp (v6)                ALLOW       Anywhere (v6)
    123/udp (v6)               ALLOW       Anywhere (v6)
    ```
+   - Reference: https://www.howtoforge.com/tutorial/ufw-uncomplicated-firewall-on-ubuntu-15-04/#deleting-a-ufw-firewall-rule
 ## 5. Add a new user
  - As root and then follow the prompts to add a password and name for this new account. 
  - Once you do that, you will need to add the user to the sudoers file.
